@@ -1,0 +1,502 @@
+/* ==========================
+   COLOURS
+   Our colours are saved once here and reused everywhere.
+   To change a colour, change it in this one place.
+========================== */
+
+:root {
+    --green: #2E8B57;          /* main green: borders and accents only (too light for white text) */
+    --green-dark: #1F5D3A;     /* darker green: header, footer, buttons */
+    --green-darker: #174A2E;   /* even darker: button hover */
+    --mint: #DFF6DF;           /* light green: tinted sections */
+    --page: #F4FFF4;           /* page background */
+    --text: #2B2B2B;           /* body text */
+    --muted: #5C5C5C;          /* captions and placeholders */
+    --border: #767676;         /* form borders: dark enough to see (3:1 contrast rule) */
+    --error: #B3261E;          /* red for wrongly filled form fields */
+    --highlight: #FFE066;      /* yellow for hover and focus */
+}
+
+/* ==========================
+   GENERAL STYLING
+========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Makes the menu links glide down the page instead of jumping */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--page);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* Images never grow wider than their box */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* A clear yellow outline shows which link or button is selected with the keyboard */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--highlight);
+    outline-offset: 2px;
+}
+
+/* Hidden until a keyboard user presses Tab */
+.skip-link {
+    position: absolute;
+    left: 10px;
+    top: -60px;
+    background: var(--highlight);
+    color: var(--text);
+    padding: 10px 16px;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 10px;
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+/* "sticky" keeps the menu at the top while you scroll */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--green-dark);
+    color: white;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+}
+
+nav a {
+    display: inline-block;
+    padding: 4px 0;           /* a slightly bigger area to tap on phones */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: var(--highlight);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* ==========================
+   SECTIONS
+========================== */
+
+section {
+    padding: 70px 40px;
+    /* Stops the sticky header from covering a section's title
+       (100px because the menu can wrap onto two lines on medium screens) */
+    scroll-margin-top: 100px;
+}
+
+/* Every second section gets a light green background */
+.tinted {
+    background: var(--mint);
+}
+
+section h2 {
+    text-align: center;
+    color: var(--green-dark);
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.intro {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* ==========================
+   HERO SECTION
+========================== */
+
+.hero {
+    text-align: center;
+    padding: 110px 20px;
+    background: linear-gradient(135deg, var(--mint), #FFFFFF);
+}
+
+.hero h1 {
+    color: var(--green-dark);
+    font-size: 44px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    font-size: 18px;
+}
+
+/* The home page hero has a photo behind the text.
+   A dark green layer sits on top of the photo so the white text stays easy to read.
+   If the photo is missing, the plain dark green colour shows instead. */
+.hero--photo {
+    background-color: var(--green-dark);
+    background-image:
+        linear-gradient(rgba(23, 74, 46, 0.85), rgba(23, 74, 46, 0.70)),
+        url("images/hero-classroom.jpg");
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.hero--photo h1 {
+    color: white;
+}
+
+/* A yellow button stands out on the dark photo */
+.hero--photo .btn {
+    background: var(--highlight);
+    color: var(--text);
+}
+
+.hero--photo .btn:hover {
+    background: white;
+}
+
+/* A white outline is easier to see than yellow on the yellow button */
+.hero--photo .btn:focus-visible {
+    outline-color: white;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 30px;
+    background: var(--green-dark);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: var(--green-darker);
+}
+
+/* ==========================
+   FLEXBOX CARDS
+========================== */
+
+.card-row {
+    list-style: none;          /* the cards are a list, but we don't want bullet points */
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Cards can grow and shrink a little, so rows fill the space more evenly */
+.card {
+    flex: 1 1 220px;
+    max-width: 260px;
+    background: white;
+    padding: 24px 20px;
+    border-radius: 10px;
+    border-top: 5px solid var(--green);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card h3 {
+    color: var(--green-dark);
+    margin-bottom: 8px;
+}
+
+.card-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
+/* ==========================
+   CHALLENGES AND SOLUTIONS LISTS
+========================== */
+
+.numbered-list {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.numbered-list li {
+    background: white;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border-left: 5px solid var(--green);
+}
+
+.numbered-list li::marker {
+    color: var(--green-dark);
+    font-weight: bold;
+}
+
+/* Puts each title on its own line above its explanation */
+.numbered-list strong {
+    display: block;
+    color: var(--green-dark);
+    font-size: 18px;
+}
+
+/* ==========================
+   GALLERY
+   A grid with 3 photos per row on big screens
+========================== */
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.gallery figure {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;          /* keeps the photo inside the rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+}
+
+.gallery img {
+    width: 100%;
+    aspect-ratio: 4 / 3;      /* every photo is the same shape */
+    object-fit: cover;        /* crops the photo neatly instead of squashing it */
+}
+
+.gallery figcaption {
+    padding: 12px 16px;
+    font-weight: bold;
+    color: var(--green-dark);
+}
+
+.photo-credit {
+    display: block;
+    font-size: 13px;
+    font-weight: normal;
+    color: var(--muted);
+}
+
+.photo-credit a {
+    color: inherit;
+}
+
+/* ==========================
+   CONTACT FORM
+========================== */
+
+form {
+    max-width: 600px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+input,
+textarea {
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font: inherit;
+}
+
+/* Lets people make the message box taller, but not wider than the form */
+textarea {
+    resize: vertical;
+}
+
+::placeholder {
+    color: var(--muted);
+}
+
+/* Red border only AFTER someone has typed something wrong and moved on,
+   not while the form is still empty */
+input:user-invalid,
+textarea:user-invalid {
+    border: 2px solid var(--error);
+}
+
+button {
+    margin-top: 20px;
+    padding: 14px;
+    background: var(--green-dark);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: var(--green-darker);
+}
+
+/* ==========================
+   THANK YOU PAGE
+========================== */
+
+.thanks {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.thanks h1 {
+    font-size: 40px;
+    margin-bottom: 0;
+}
+
+.thanks p {
+    margin: 0;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer {
+    background: var(--green-dark);
+    color: white;
+    text-align: center;
+    padding: 24px;
+}
+
+footer a {
+    color: white;
+}
+
+.credits {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+/* ==========================
+   REDUCED MOTION
+   Some people get dizzy from movement on screen and turn on
+   "reduce motion" in their phone or computer settings. We respect that.
+========================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        transition: none !important;
+    }
+
+}
+
+/* ==========================
+   RESPONSIVE DESIGN
+========================== */
+
+/* Tablets */
+@media (max-width: 900px) {
+
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+/* Phones */
+@media (max-width: 600px) {
+
+    .site-header {
+        position: static;   /* a big menu would cover the phone screen */
+        flex-direction: column;
+        text-align: center;
+        padding: 16px 20px;
+    }
+
+    nav ul {
+        justify-content: center;
+    }
+
+    section {
+        padding: 50px 20px;
+    }
+
+    .hero {
+        padding: 70px 20px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .card {
+        max-width: none;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+}
